@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const webpack = require('webpack');
 const zopfli = require('@gfx/zopfli');
 
 module.exports = mode => {
@@ -57,8 +58,17 @@ module.exports = mode => {
                 new MiniCssExtractPlugin({
                    filename: "[name].css",
                    chunkFilename: "[id].css"
-                })
+                }),
+                new webpack.HotModuleReplacementPlugin()
             ],
+            devServer: {
+                contentBase: path.resolve(__dirname, 'dist/'),
+                stats: 'errors-only',
+                open: true,
+                port: 3000,
+                compress: true,
+                hot:true
+            },
         }
     }
     else{
@@ -66,7 +76,6 @@ module.exports = mode => {
         return {
             mode,
             entry: './src/App.js',
-            watch: true,
             output: {
                 path: path.resolve(__dirname, './dist'),
                 filename: 'bundle.js'
