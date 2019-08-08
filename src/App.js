@@ -1,17 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import './assets/css/layout.css';
 import './assets/scss/layout.scss';
 import happy from './assets/img/happy.png';
+import Title from './Title';
 
 const App = () => {
-    console.log("rze");
   return (
-    <div>
-      <p>React !</p>
+    <React.Fragment>
+      <Title />
       <img src={happy} alt="happy-png" />
-    </div>
+    </React.Fragment>
   );
 };
+
 export default App;
 ReactDOM.render(<App />, document.getElementById("app"));

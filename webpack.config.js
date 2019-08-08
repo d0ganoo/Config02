@@ -9,21 +9,15 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const webpack = require('webpack');
 const zopfli = require('@gfx/zopfli');
 
-module.exports = mode => {
-    if (mode === "development"){
-        console.log("je suis en developoment");
-        return {
-            mode,
-            entry: './src/App.js',
-            watch: true,
-            output: {
-                path: path.resolve(__dirname, './dist'),
-                filename: 'bundle.js'
-            },
-            module:{
-                rules:[
+const entry = './src/App.js';
+const output =  {
+                    path: path.resolve(__dirname, './dist'),
+                    filename: "js/app.js",
+                    chunkFilename: "js/[name].js"
+                };
+const rules = [
                     {
-                        test:/\.js$/,
+                        test:/\.(js|jsx)$/,
                         exclude: /(node_modules|bower_components)/,
                         use:['babel-loader']
                     },
@@ -47,7 +41,38 @@ module.exports = mode => {
                         }
                         ]
                     }
-                ]
+                ];
+
+
+
+module.exports = mode => {
+    if (mode === "development"){
+        console.log("je suis en developoment");
+        return {
+            mode,
+            devtool: "inline-source-map",
+            entry: entry,
+            watch: true,
+            output: output,
+            module:{
+                rules: rules
+            },
+            optimization : {
+                splitChunks: {
+                    chunks: "all",
+                    name: "vendors",
+                    cacheGroups: {
+                        vendors: {
+                            test: /[\\/]node_modules[\\/]/,
+                            priority: -10
+                        },
+                        default:{
+                            minChunks:2,
+                            priority: -20,
+                            reuseExistingChunk: true
+                        }
+                    }
+                }
             },
             plugins: [
                 new CleanWebpackPlugin(),
@@ -68,8 +93,7 @@ module.exports = mode => {
                 stats: 'errors-only',
                 open: true,
                 port: 3000,
-                compress: true,
-                hot:true
+                compress: true
             },
         }
     }
@@ -77,39 +101,10 @@ module.exports = mode => {
         console.log("je suis en production");
         return {
             mode,
-            entry: './src/App.js',
-            output: {
-                path: path.resolve(__dirname, './dist'),
-                filename: 'bundle.js'
-            },
+            entry: entry,
+            output: output,
             module:{
-                rules:[
-                    {
-                        test:/\.js$/,
-                        exclude: /(node_modules|bower_components)/,
-                        use:['babel-loader']
-                    },
-                    {
-                        test: [/.css$|.scss$/],
-                        use:[
-                        MiniCssExtractPlugin.loader,
-                        'css-loader',
-                        'sass-loader'
-                        ]
-                    },
-                    {
-                        test: /\.(png|jpg|gif|svg)$/,
-                        use: [
-                        {
-                            loader: 'file-loader',
-                            options: {
-                            name: '[name].[ext]',
-                            outputPath: 'assets/images'
-                            }
-                        }
-                        ]
-                    }
-                ]
+                rules: rules
             },
             plugins: [
                 new CleanWebpackPlugin(),
