@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 
 const Title = () => {
   return (
-      <h1>Salut React !tatat</h1>
+      <h1>Football manager</h1>
     );
 };
 

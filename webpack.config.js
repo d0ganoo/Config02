@@ -9,7 +9,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const webpack = require('webpack');
 const zopfli = require('@gfx/zopfli');
 
-const entry = './src/App.js';
+const entry = './src/index.js';
 const output =  {
                     path: path.resolve(__dirname, './dist'),
                     filename: "js/app.js",
