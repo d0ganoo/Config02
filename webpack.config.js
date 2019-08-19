@@ -92,8 +92,10 @@ module.exports = mode => {
                 contentBase: path.resolve(__dirname, 'dist/'),
                 stats: 'errors-only',
                 open: true,
+                hot: true,
                 port: 3000,
-                compress: true
+                compress: true,
+                historyApiFallback: true,
             },
         }
     }

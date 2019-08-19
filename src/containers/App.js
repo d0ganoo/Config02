@@ -1,46 +1,36 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import '../assets/scss/layout.scss';
-import happy from '../assets/img/happy.png';
-import Title from '../components/Title';
-import {getData} from '../tools/callApi';
+import LiveScore from '../components/LiveScore';
+import Competitions from '../components/Competitions';
+import Teams from '../components/Teams';
+import Col from 'react-bootstrap/Col';
 
 class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-        datas:[]
     };
   }
 
-  componentDidMount(){
-    let data = getData();
-    let currentThis = this;
-
-     data.then(function(data){
-      currentThis.setState({datas:data.matches});
-    });
-  }
-  
-  componentDidUpdate(){
-    let i = 0;
-    console.log(i++);
-  }
-
   render(){
-    console.log('-',this.state.datas);
     return (
       <main>
         <header>
-          <Title />
+          <h1>Football manager</h1>
         </header>
-          <section className="content-field">
-
-          </section>
-          <section className="content-players">
-
-          </section>
-          <footer></footer>
+        <Col md={12} className="main-container">
+          <Col md={3} className="col-left">
+            <LiveScore/>
+          </Col>
+          <Col md={6}>
+            <Competitions/>
+          </Col>
+          <Col md={3} className='col-right'>
+            <h2>Equipes</h2>
+            <Teams/>
+          </Col>
+        </Col>
+        <footer></footer>
       </main>
     );
   }

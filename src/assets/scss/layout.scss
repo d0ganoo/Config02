@@ -4,25 +4,32 @@ body{
     margin:0;
     padding:0;
 }
-h1,h2,h3,h4,h5,p,span{
-    margin:0;
-    padding:0;
-}
+// h1,h2,h3,h4,h5,p,span{
+//     margin:0;
+//     padding:0;
+// }
 p{
     background-color: $p-bg-color;
 }
 
-h1{
-    background-color: red;
+header h1{
+    text-align: center;
+}
+
+.main-container{
+    display:flex;
+    justify-content: flex-start;
 }
 
 header{
-    background-color:yellow;
-    height: 50px;
+    padding: 15px;
 }
 .content-field{
-    background-color: blue;
+
 }
 .content-players{
-    background-color: green;
+
+}
+.live-match{
+    display: inline-block;
 }
